@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -z "${VIRTUAL_ENV}" ]; then
+    echo "No virtual environment found. Please activate a virtual environment first."
+    exit 1
+fi
+
+LIBRARY_PATH="/usr/lib/qt6/plugins"
+PYTHON_VERSION=$(python --version | sed -e 's/\(Python\) \(.*\)\.[0-9]/\L\1\2/')
+VIRT_PLUGIN_PATH="${VIRTUAL_ENV}/lib/${PYTHON_VERSION}/site-packages/PyQt6/Qt6/plugins"
+mkdir -p ${VIRTUAL_ENV}/lib/${PYTHON_VERSION}/site-packages/PyQt6/Qt6/plugins/styles
+ln -s ${LIBRARY_PATH}/platformthemes/libqt6ct.so ${VIRT_PLUGIN_PATH}/platformthemes/
+ln -s ${LIBRARY_PATH}/styles/libqt6ct-style.so ${VIRT_PLUGIN_PATH}/styles/
+
+exit 0
